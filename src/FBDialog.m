@@ -409,7 +409,8 @@ params   = _params;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     // 102 == WebKitErrorFrameLoadInterruptedByPolicyChange
-    if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
+    // Redbug modified following statement according to http://stackoverflow.com/questions/8161254/ios-sdk-post-to-wall-fails-on-first-try-when-app-is-already-authorized-with-fb
+    if (!(([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102) || error.code == -999)) {
         [self dismissWithError:error animated:YES];
     }
 }
